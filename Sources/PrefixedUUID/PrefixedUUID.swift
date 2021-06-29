@@ -92,35 +92,20 @@ extension PrefixedUUID: RawRepresentable {
 
 // MARK: - UUID Prefix Protocol
 
-public protocol UUIDPrefix: CustomStringConvertible, CustomDebugStringConvertible {
-	
+public protocol UUIDPrefix {
 	static var uuidPrefix: String { get }
 	static var uuidPrefixIsCaseSensitive: Bool { get }
-	
 }
 
+// MARK: Default Values
+
 extension UUIDPrefix {
-	
-	// MARK: Default Values
-	
 	public static var uuidPrefixIsCaseSensitive: Bool { true }
-	
-	// MARK: Additional Protocol Conformances
-	
-	public var description: String { Self.uuidPrefix }
-	
-	public var debugDescription: String {
-		let prefixCase = Self.uuidPrefixIsCaseSensitive ? "case-sensitive" : "case-insensitive"
-		return "\(Self.self) (\"\(Self.uuidPrefix)\", \(prefixCase))"
-	}
-	
 }
 
 // MARK: - Useful UUID Extensions
 
 extension UUID {
-	
 	public func prefixed<P: UUIDPrefix>(by prefix: P.Type) -> PrefixedUUID<P> { .init(uuid: self) }
 	public func prefixed<P: UUIDPrefix>() -> PrefixedUUID<P> { .init(uuid: self) }
-	
 }
