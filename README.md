@@ -1,4 +1,4 @@
-# `PrefixedUUID`: A type-safe, `Codable` prefixed `UUID`
+# `PrefixedUUID`: A type-safe, `Codable` `struct` for prefixed `UUID`s
 
 ## 🤔 What is `PrefixedUUID` for?
 
@@ -16,10 +16,16 @@ could not be used instead of a `UUID` prefixed by `post_`.
 
 ## 🛠 Features
 
-- I wrote `PrefixedUUID`s so that they take (almost) as little space in memory as `UUID`s do.
+- **Type safety:** `User.ID != Post.ID`, even though they are stored the same way
+- **`Codable`:** (`Encodable & Decodable`) conformance
+- **Practical:** `PrefixedUUID`s allow you to access the underlying `UUID` or the prefixed `String`,
+  without storing anything more in memory or requiring expensive computations.
+- **Convenient:** Foundation's `UUID` extensions make it easy to work with `PrefixedUUID`s
+- **Type inference:** Most of the time, you don't need to make associated types explicit
+- **Lightweight:** `PrefixedUUID`s take (almost) as little space in memory as `UUID`s do.
   `String` prefixes are stored once ever and dashes in the `UUID` are not stored.
   The only thing that's stored for each `PrefixedUUID` is a `UUID` (which directly stores bytes).
-  
+
 ## 📦 Installation
 
 ### Using `Package.swift` in another Swift Package
@@ -56,7 +62,7 @@ targets: [
 ### In a full project
 
 To add `PrefixedUUID` to your project, go to your project's configuration,
-then go to the "Swift Packages" tab, click <kbd>+</kbd> and follow XCode's instructions
+then go to the <kbd>Swift Packages</kbd> tab, click <kbd>+</kbd> and follow XCode's instructions
 <small>(Assuming you use XCode)</small>. When you're asked for a URL, enter
 <https://github.com/RemiBardon/swift-prefixed-uuid>.
 
@@ -135,4 +141,4 @@ However, I still have a few things to add:
 
 ## ⚖️ License
 
-This package is provided under MIT License.
+This package is provided under MIT License. For more information, see [LICENSE](./LICENSE).
