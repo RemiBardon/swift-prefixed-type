@@ -91,4 +91,21 @@ final class PrefixedUUIDTests: XCTestCase {
 		XCTAssertEqual(result, expected)
 	}
 	
+	func testRawValue() {
+		let uuid = UUID()
+		let id = PrefixedUUID<UserIDPrefix>(uuid: uuid)
+		
+		let result = id.rawValue
+		let expected = "user_\(uuid.uuidString)"
+		
+		XCTAssertEqual(result, expected)
+	}
+	
+	func testDecodeFromRawValue() {
+		let id = PrefixedUUID<UserIDPrefix>()
+		let result = PrefixedUUID<UserIDPrefix>(rawValue: id.rawValue)
+		
+		XCTAssertEqual(result, id)
+	}
+	
 }

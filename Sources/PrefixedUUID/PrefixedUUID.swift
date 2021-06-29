@@ -63,6 +63,33 @@ extension PrefixedUUID: CustomDebugStringConvertible {
 	public var debugDescription: String { "[\(Prefix.uuidPrefix)]\(uuid.uuidString)" }
 }
 
+extension PrefixedUUID: RawRepresentable {
+	
+	public init?(rawValue: String) {
+		var string = rawValue
+		
+		if Prefix.uuidPrefixIsCaseSensitive {
+			guard string.hasPrefix(Prefix.uuidPrefix) else {
+				return nil
+			}
+		} else {
+			guard string.prefix(Prefix.uuidPrefix.count).lowercased() == Prefix.uuidPrefix.lowercased() else {
+				return nil
+			}
+		}
+		
+		string.removeFirst(Prefix.uuidPrefix.count)
+		guard let id = UUID(uuidString: string) else {
+			return nil
+		}
+		
+		self.init(uuid: id)
+	}
+	
+	public var rawValue: String { fullId }
+	
+}
+
 // MARK: - UUID Prefix Protocol
 
 public protocol UUIDPrefix: CustomStringConvertible, CustomDebugStringConvertible {
