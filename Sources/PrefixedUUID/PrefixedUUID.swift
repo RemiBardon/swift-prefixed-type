@@ -90,6 +90,14 @@ extension PrefixedUUID: RawRepresentable {
 	
 }
 
+extension PrefixedUUID: LosslessStringConvertible {
+	
+	public init?(_ description: String) {
+		self.init(rawValue: description)
+	}
+	
+}
+
 // MARK: - UUID Prefix Protocol
 
 public protocol UUIDPrefix {
