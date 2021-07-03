@@ -60,7 +60,7 @@ extension PrefixedUUID: CustomStringConvertible {
 }
 
 extension PrefixedUUID: CustomDebugStringConvertible {
-	public var debugDescription: String { "[\(Prefix.uuidPrefix)]\(uuid.uuidString)" }
+	public var debugDescription: String { "(\(Prefix.uuidPrefix))\(uuid.uuidString)" }
 }
 
 extension PrefixedUUID: RawRepresentable {

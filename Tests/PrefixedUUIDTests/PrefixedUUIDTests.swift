@@ -86,7 +86,7 @@ final class PrefixedUUIDTests: XCTestCase {
 		let id = PrefixedUUID<UserIDPrefix>(uuid: uuid)
 		
 		let result = String(reflecting: id)
-		let expected = "[user_]\(uuid.uuidString)"
+		let expected = "(user_)\(uuid.uuidString)"
 		
 		XCTAssertEqual(result, expected)
 	}
