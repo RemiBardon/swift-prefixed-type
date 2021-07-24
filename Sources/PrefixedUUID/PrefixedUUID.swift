@@ -1,3 +1,10 @@
+//
+//  PrefixedUUID.swift
+//  PrefixedUUID
+//
+//  Created by Rémi Bardon on 29/06/2021.
+//
+
 import Foundation
 
 // MARK: - Prefixed UUID struct
