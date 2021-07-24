@@ -1,12 +1,12 @@
 //
 //  PrefixedUUIDTests.swift
-//  PrefixedUUIDTests
+//  PrefixedTests
 //
 //  Created by Rémi Bardon on 29/06/2021.
 //
 
 import XCTest
-@testable import PrefixedUUID
+@testable import Prefixed
 
 final class PrefixedUUIDTests: XCTestCase {
 	
@@ -14,17 +14,17 @@ final class PrefixedUUIDTests: XCTestCase {
 		typealias ID = PrefixedUUID<UserIDPrefix>
 		let id: ID
 	}
-	struct UserIDPrefix: UUIDPrefix {
-		static var uuidPrefix: String { "user_" }
+	struct UserIDPrefix: PrefixProtocol {
+		static var prefix: String { "user_" }
 	}
 	
 	struct InsensitiveUser: Hashable, Codable, Identifiable {
 		typealias ID = PrefixedUUID<CaseInsensitiveUserIDPrefix>
 		let id: ID
 	}
-	struct CaseInsensitiveUserIDPrefix: UUIDPrefix {
-		static var uuidPrefix: String { "lower_user_" }
-		static var uuidPrefixIsCaseSensitive: Bool { false }
+	struct CaseInsensitiveUserIDPrefix: PrefixProtocol {
+		static var prefix: String { "lower_user_" }
+		static var isCaseSensitive: Bool { false }
 	}
 	
 	func testDecodeWithInvalidIdPrefix() {
@@ -51,7 +51,7 @@ final class PrefixedUUIDTests: XCTestCase {
 		XCTAssertNoThrow(try JSONDecoder().decode(User.self, from: data))
 	}
 	
-	func testDecodeWithInValidIdPrefixCaseInsensitive() {
+	func testDecodeWithInvalidIdPrefixCaseInsensitive() {
 		let data = """
 		{"id": "U_56C68C54-510E-42CC-8253-106F7E251F53"}
 		""".data(using: .utf8)!
@@ -74,6 +74,16 @@ final class PrefixedUUIDTests: XCTestCase {
 		let data = try JSONEncoder().encode(user)
 		let result = String(data: data, encoding: .utf8)
 		let expected = "{\"id\":\"user_\(uuid.uuidString)\"}"
+		
+		XCTAssertEqual(result, expected)
+	}
+	
+	func testPrefixedId() {
+		let uuid = UUID()
+		let id = PrefixedUUID<UserIDPrefix>(uuid: uuid)
+		
+		let result = id.prefixedId
+		let expected = "user_\(uuid.uuidString)"
 		
 		XCTAssertEqual(result, expected)
 	}

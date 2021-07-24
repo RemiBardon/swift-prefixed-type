@@ -1,6 +1,6 @@
-# `PrefixedUUID`: A type-safe, `Codable` `struct` for prefixed `UUID`s
+# `Prefixed`: A type-safe, `Codable` `struct` for prefixed types
 
-## 🤔 What is `PrefixedUUID` for?
+## 🤔 What is `Prefixed` for?
 
 `UUID`s are great, you can use them everywhere… but when you do so,
 it starts being hard to recognize where a `UUID` comes from.
@@ -14,7 +14,13 @@ Writing this library, I wanted to keep it very simple and straight-forward.
 I also wanted the `PrefixedUUID`s to be type-safe, meaning a `UUID` prefixed with `user_`
 could not be used instead of a `UUID` prefixed by `post_`.
 
+After writing `PrefixedUUID`, I realized prefixed `UUID`s are just a subset
+of all the types we could want to prefix. That's why I made it more generic,
+by creating the `Prefixed` `struct`.
+
 ## 🛠 Features
+
+> These are the features of `PrefixedUUID`s, but you can say the same with any other prefixed type.
 
 - **Type safety:** `User.ID != Post.ID`, even though they are stored the same way
 - **`Codable`:** (`Encodable & Decodable`) conformance
@@ -36,9 +42,9 @@ To use this package in a project, import the `"prefixed-uuid"` package like so:
 dependencies: [
 	// Other dependencies
 	.package(
-		name: "prefixed-uuid",
-		url: "https://github.com/RemiBardon/swift-prefixed-uuid",
-		.upToNextMajor(from: "1.0.0")
+		name: "prefixed",
+		url: "https://github.com/RemiBardon/swift-prefixed-type",
+		.upToNextMajor(from: "2.0.0")
 	),
 ],
 ```
@@ -52,7 +58,7 @@ targets: [
 		name: "<YourTarget>",
 		dependencies: [
 			// Other dependencies
-			.product(name: "PrefixedUUID", package: "prefixed-uuid"),
+			.product(name: "Prefixed", package: "prefixed"),
 		]
 	),
 	// ...
@@ -61,27 +67,29 @@ targets: [
 
 ### In a full project
 
-To add `PrefixedUUID` to your project, go to your project's configuration,
+To add `Prefixed` to your project, go to your project's configuration,
 then go to the <kbd>Swift Packages</kbd> tab, click <kbd>+</kbd> and follow XCode's instructions
 <small>(Assuming you use XCode)</small>. When you're asked for a URL, enter
-<https://github.com/RemiBardon/swift-prefixed-uuid>.
+<https://github.com/RemiBardon/swift-prefixed-type>.
 
 ## 🧑‍💻 Usage
 
-First, create a type conforming to `UUIDPrefix`:
+> The following uses `PrefixedUUID`s, but you can use `Prefixed<Prefix, Base>` instead if you want.
+
+First, create a type conforming to `PrefixProtocol`:
 
 ```swift
-struct UserIDPrefix: UUIDPrefix {
-	static var uuidPrefix: String { "user_" }
+struct UserIDPrefix: PrefixProtocol {
+	static var prefix: String { "user_" }
 }
 ```
 
 If you want the prefix to be case-insensitive, you can override the default (`true`) value:
 
 ```swift
-struct CaseInsensitiveUserIDPrefix: UUIDPrefix {
-	static var uuidPrefix: String { "lower_user_" }
-	static var uuidPrefixIsCaseSensitive: Bool { false }
+struct CaseInsensitiveUserIDPrefix: PrefixProtocol {
+	static var prefix: String { "lower_user_" }
+	static var isCaseSensitive: Bool { false }
 }
 ```
 
@@ -125,17 +133,28 @@ There are many ways to create a `PrefixedUUID`:
 
 ## ⚠️ Warnings
 
-- Do not make an existing `struct` conform to `UUIDPrefix`:
-  `UUIDPrefix` sets custom `String` and debug descriptions which would override the one you expect.
+- Do not make an existing `struct` conform to `PrefixProtocol`:
+  `PrefixProtocol` sets custom `String` and debug descriptions which would override the one you expect.
+
+## ❌ Major versions migrations
+
+### From `1.X.X` to `2.X.X`
+
+- Package has been renamed from `prefixed-uuid` to `prefixed`
+- Package library has been renamed from `PrefixedUUID` to `Prefixed`
+- `UUIDPrefix` has been renamed to `PrefixProtocol`
+	- `UUIDPrefix.uuidPrefix` has been renamed to `PrefixProtocol.prefix`
+	- `UUIDPrefix.uuidPrefixIsCaseSensitive` has been renamed to `PrefixProtocol.isCaseSensitive`
 
 ## 🗺 Roadmap
 
 As you would expect from a package this small, it is not actively developed.
 However, I still have a few things to add:
 
+- [x] Generic `Prefixed` `struct`, to be `UUID`-independent
 - [ ] Swift documentation comments, to make the package more understandable
 - [ ] Continuous Integration, to be sure the package runs in all environments
-- [ ] A documentation page
+- [ ] Documentation page
 - [ ] (Installation guides for older Swift Package Manager versions)
 - [ ] (CONTRIBUTING guidelines)
 
