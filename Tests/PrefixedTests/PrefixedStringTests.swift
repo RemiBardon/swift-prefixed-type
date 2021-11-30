@@ -32,34 +32,34 @@ final class PrefixedStringTests: XCTestCase {
 	/// - Note: We don't care how it's made, we just want a "random" string.
 	static var randomString: String { UUID().uuidString.filter({ $0 != "-" }) }
 	
-	func testDecodeWithInvalidIdPrefix() {
-		let data = """
+	func testDecodeWithInvalidIdPrefix() throws {
+		let data = try XCTUnwrap("""
 		{"id": "t_67083627"}
-		""".data(using: .utf8)!
+		""".data(using: .utf8))
 		
 		XCTAssertThrowsError(try JSONDecoder().decode(Tag.self, from: data))
 	}
 	
-	func testDecodeWithValidIdPrefix() {
-		let data = """
+	func testDecodeWithValidIdPrefix() throws {
+		let data = try XCTUnwrap("""
 		{"id": "tag_e338a7f7"}
-		""".data(using: .utf8)!
+		""".data(using: .utf8))
 		
 		XCTAssertNoThrow(try JSONDecoder().decode(Tag.self, from: data))
 	}
 	
-	func testDecodeWithInvalidIdPrefixCaseInsensitive() {
-		let data = """
+	func testDecodeWithInvalidIdPrefixCaseInsensitive() throws {
+		let data = try XCTUnwrap("""
 		{"id": "T_792dee1e"}
-		""".data(using: .utf8)!
+		""".data(using: .utf8))
 		
 		XCTAssertThrowsError(try JSONDecoder().decode(InsensitiveTag.self, from: data))
 	}
 	
-	func testDecodeWithValidIdPrefixCaseInsensitive() {
-		let data = """
+	func testDecodeWithValidIdPrefixCaseInsensitive() throws {
+		let data = try XCTUnwrap("""
 		{"id": "lower_TAG_ba995e7f"}
-		""".data(using: .utf8)!
+		""".data(using: .utf8))
 		
 		XCTAssertNoThrow(try JSONDecoder().decode(InsensitiveTag.self, from: data))
 	}

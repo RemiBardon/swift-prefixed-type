@@ -27,50 +27,50 @@ final class PrefixedUUIDTests: XCTestCase {
 		static var isCaseSensitive: Bool { false }
 	}
 	
-	func testDecodeWithInvalidIdPrefix() {
-		let data = """
+	func testDecodeWithInvalidIdPrefix() throws {
+		let data = try XCTUnwrap("""
 		{"id": "u_44607F67-DF9D-4ECD-8C8C-4254CCA1EBDC"}
-		""".data(using: .utf8)!
+		""".data(using: .utf8))
 		
 		XCTAssertThrowsError(try JSONDecoder().decode(User.self, from: data))
 	}
 	
-	func testDecodeWithInvalidUUID() {
-		let data = """
+	func testDecodeWithInvalidUUID() throws {
+		let data = try XCTUnwrap("""
 		{"id": "user_abc"}
-		""".data(using: .utf8)!
+		""".data(using: .utf8))
 		
 		XCTAssertThrowsError(try JSONDecoder().decode(User.self, from: data))
 	}
 	
-	func testDecodeWithValidIdPrefix() {
-		let data = """
+	func testDecodeWithValidIdPrefix() throws {
+		let data = try XCTUnwrap("""
 		{"id": "user_FAED372B-1D04-4FC1-8D79-385C2F65FBFD"}
-		""".data(using: .utf8)!
+		""".data(using: .utf8))
 		
 		XCTAssertNoThrow(try JSONDecoder().decode(User.self, from: data))
 	}
 	
-	func testDecodeWithInvalidIdPrefixCaseInsensitive() {
-		let data = """
+	func testDecodeWithInvalidIdPrefixCaseInsensitive() throws {
+		let data = try XCTUnwrap("""
 		{"id": "U_56C68C54-510E-42CC-8253-106F7E251F53"}
-		""".data(using: .utf8)!
+		""".data(using: .utf8))
 		
 		XCTAssertThrowsError(try JSONDecoder().decode(InsensitiveUser.self, from: data))
 	}
 	
-	func testDecodeWithValidIdPrefixCaseInsensitive() {
-		let data = """
+	func testDecodeWithValidIdPrefixCaseInsensitive() throws {
+		let data = try XCTUnwrap("""
 		{"id": "lower_USER_4ED1FF78-B46F-4359-8C6B-F80103EAB6D9"}
-		""".data(using: .utf8)!
+		""".data(using: .utf8))
 		
 		XCTAssertNoThrow(try JSONDecoder().decode(InsensitiveUser.self, from: data))
 	}
 	
-	func testDecodeWithInvalidType() {
-		let data = """
+	func testDecodeWithInvalidType() throws {
+		let data = try XCTUnwrap("""
 		{"id": "user_56C68C54"}
-		""".data(using: .utf8)!
+		""".data(using: .utf8))
 		
 		XCTAssertThrowsError(try JSONDecoder().decode(User.self, from: data))
 	}

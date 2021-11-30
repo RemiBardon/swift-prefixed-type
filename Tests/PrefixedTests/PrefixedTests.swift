@@ -33,50 +33,50 @@ final class PrefixedTests: XCTestCase {
 	
 	static var randomInt: Int { Int.random(in: 0...9999) }
 	
-	func testDecodeWithInvalidIdPrefix() {
-		let data = """
+	func testDecodeWithInvalidIdPrefix() throws {
+		let data = try XCTUnwrap("""
 		{"id": "u_834"}
-		""".data(using: .utf8)!
+		""".data(using: .utf8))
 		
 		XCTAssertThrowsError(try JSONDecoder().decode(User.self, from: data))
 	}
 	
-	func testDecodeWithInvalidID() {
-		let data = """
+	func testDecodeWithInvalidID() throws {
+		let data = try XCTUnwrap("""
 		{"id": "user_abc"}
-		""".data(using: .utf8)!
+		""".data(using: .utf8))
 		
 		XCTAssertThrowsError(try JSONDecoder().decode(User.self, from: data))
 	}
 	
-	func testDecodeWithValidIdPrefix() {
-		let data = """
+	func testDecodeWithValidIdPrefix() throws {
+		let data = try XCTUnwrap("""
 		{"id": "user_65"}
-		""".data(using: .utf8)!
+		""".data(using: .utf8))
 		
 		XCTAssertNoThrow(try JSONDecoder().decode(User.self, from: data))
 	}
 	
-	func testDecodeWithInvalidIdPrefixCaseInsensitive() {
-		let data = """
+	func testDecodeWithInvalidIdPrefixCaseInsensitive() throws {
+		let data = try XCTUnwrap("""
 		{"id": "U_8253"}
-		""".data(using: .utf8)!
+		""".data(using: .utf8))
 		
 		XCTAssertThrowsError(try JSONDecoder().decode(InsensitiveUser.self, from: data))
 	}
 	
-	func testDecodeWithValidIdPrefixCaseInsensitive() {
-		let data = """
+	func testDecodeWithValidIdPrefixCaseInsensitive() throws {
+		let data = try XCTUnwrap("""
 		{"id": "lower_USER_784359"}
-		""".data(using: .utf8)!
+		""".data(using: .utf8))
 		
 		XCTAssertNoThrow(try JSONDecoder().decode(InsensitiveUser.self, from: data))
 	}
 	
-	func testDecodeWithInvalidTypeUUID() {
-		let data = """
+	func testDecodeWithInvalidTypeUUID() throws {
+		let data = try XCTUnwrap("""
 		{"id": "user_ABCD"}
-		""".data(using: .utf8)!
+		""".data(using: .utf8))
 		
 		XCTAssertThrowsError(try JSONDecoder().decode(User.self, from: data))
 	}
