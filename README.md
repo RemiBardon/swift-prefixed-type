@@ -31,6 +31,13 @@ by creating the `Prefixed` `struct`.
 - **Lightweight:** `PrefixedUUID`s take (almost) as little space in memory as `UUID`s do.
   `String` prefixes are stored once ever and dashes in the `UUID` are not stored.
   The only thing that's stored for each `PrefixedUUID` is a `UUID` (which directly stores bytes).
+- **Case (in)sensitive:** By default, prefixes are case sensitive, but with a simple option,
+  you can choose for a prefix to be case insensitive.
+- **Debugging:** Failing to decode a `Prefixed` type shows a human-readable error:
+  - `"'usr_abcdef' is not prefixed by 'user_'"`
+  - `"'USR_MONPQR' is not prefixed by 'user_' (case insensitive)"`
+  - `"user_ABCD"` with a `Prefixed` `Int` => <code>"'ABCD' is not a valid \`Int\`"</code>
+  - `"user_56C68C54"` with a `Prefixed` `UUID` => <code>"'56C68C54' is not a valid \`UUID\`"</code>
 
 ## 📦 Installation
 
