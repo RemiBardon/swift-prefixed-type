@@ -31,6 +31,8 @@ final class PrefixedTests: XCTestCase {
 		static var prefix: String { "liked_" }
 	}
 	
+	static var randomInt: Int { Int.random(in: 0...9999) }
+	
 	func testDecodeWithInvalidIdPrefix() {
 		let data = """
 		{"id": "u_834"}
@@ -80,7 +82,7 @@ final class PrefixedTests: XCTestCase {
 	}
 	
 	func testEncode() throws {
-		let int = Int.random(in: 0...9999)
+		let int = Self.randomInt
 		let user = User(id: Prefixed(base: int))
 		
 		let data = try JSONEncoder().encode(user)
@@ -91,8 +93,8 @@ final class PrefixedTests: XCTestCase {
 	}
 	
 	func testPrefixedId() {
-		let int = Int.random(in: 0...9999)
-		let id = Prefixed<UserIDPrefix, Int>(base: int)
+		let int = Self.randomInt
+		let id = User.ID(base: int)
 		
 		let result = id.prefixed
 		let expected = "user_\(int)"
@@ -101,8 +103,8 @@ final class PrefixedTests: XCTestCase {
 	}
 	
 	func testDescription() {
-		let int = Int.random(in: 0...9999)
-		let id = Prefixed<UserIDPrefix, Int>(base: int)
+		let int = Self.randomInt
+		let id = User.ID(base: int)
 		
 		let result = String(describing: id)
 		let expected = "user_\(int)"
@@ -111,8 +113,8 @@ final class PrefixedTests: XCTestCase {
 	}
 	
 	func testDebugDescription() {
-		let int = Int.random(in: 0...9999)
-		let id = Prefixed<UserIDPrefix, Int>(base: int)
+		let int = Self.randomInt
+		let id = User.ID(base: int)
 		
 		let result = String(reflecting: id)
 		let expected = "(user_)\(int)"
@@ -121,8 +123,8 @@ final class PrefixedTests: XCTestCase {
 	}
 	
 	func testRawValue() {
-		let int = Int.random(in: 0...9999)
-		let id = Prefixed<UserIDPrefix, Int>(base: int)
+		let int = Self.randomInt
+		let id = User.ID(base: int)
 		
 		let result = id.rawValue
 		let expected = "user_\(int)"
@@ -131,7 +133,7 @@ final class PrefixedTests: XCTestCase {
 	}
 	
 	func testDecodeFromRawValue() {
-		let int = Int.random(in: 0...9999)
+		let int = Self.randomInt
 		let id = Prefixed<UserIDPrefix, Int>(base: int)
 		let result = Prefixed<UserIDPrefix, Int>(rawValue: id.rawValue)
 		
@@ -139,7 +141,7 @@ final class PrefixedTests: XCTestCase {
 	}
 	
 	func testDecodePrefixedBooleanFromRawValue() {
-		let bool = true
+		let bool = Bool.random()
 		let id = Prefixed<LikedPrefix, Bool>(base: bool)
 		let result = Prefixed<LikedPrefix, Bool>(rawValue: id.rawValue)
 		

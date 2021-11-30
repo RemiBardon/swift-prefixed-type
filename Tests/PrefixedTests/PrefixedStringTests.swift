@@ -10,11 +10,6 @@ import XCTest
 
 final class PrefixedStringTests: XCTestCase {
 	
-	/// Generates a random string (in fact it's just a `UUID` without `-`).
-	///
-	/// - Note: We don't care how it's made, we just want a "random" string.
-	static var randomString: String { UUID().uuidString.filter({ $0 != "-" }) }
-	
 	struct Tag: Hashable, Codable, Identifiable {
 		typealias ID = PrefixedString<TagIDPrefix>
 		let id: ID
@@ -31,6 +26,11 @@ final class PrefixedStringTests: XCTestCase {
 		static var prefix: String { "lower_tag_" }
 		static var isCaseSensitive: Bool { false }
 	}
+	
+	/// Generates a random string (in fact it's just a `UUID` without `-`).
+	///
+	/// - Note: We don't care how it's made, we just want a "random" string.
+	static var randomString: String { UUID().uuidString.filter({ $0 != "-" }) }
 	
 	func testDecodeWithInvalidIdPrefix() {
 		let data = """
@@ -66,7 +66,7 @@ final class PrefixedStringTests: XCTestCase {
 	
 	func testEncode() throws {
 		let string = Self.randomString
-		let tag = Tag(id: PrefixedString(string: string))
+		let tag = Tag(id: string.prefixed())
 		
 		let data = try JSONEncoder().encode(tag)
 		let result = String(data: data, encoding: .utf8)
@@ -77,7 +77,7 @@ final class PrefixedStringTests: XCTestCase {
 	
 	func testPrefixedId() {
 		let string = Self.randomString
-		let id = PrefixedString<TagIDPrefix>(string: string)
+		let id = string.prefixed(by: TagIDPrefix.self)
 		
 		let result = id.prefixed
 		let expected = "tag_\(string)"
@@ -87,7 +87,7 @@ final class PrefixedStringTests: XCTestCase {
 	
 	func testDescription() {
 		let string = Self.randomString
-		let id = PrefixedString<TagIDPrefix>(string: string)
+		let id = string.prefixed(by: TagIDPrefix.self)
 		
 		let result = String(describing: id)
 		let expected = "tag_\(string)"
@@ -97,7 +97,7 @@ final class PrefixedStringTests: XCTestCase {
 	
 	func testDebugDescription() {
 		let string = Self.randomString
-		let id = PrefixedString<TagIDPrefix>(string: string)
+		let id = string.prefixed(by: TagIDPrefix.self)
 		
 		let result = String(reflecting: id)
 		let expected = "(tag_)\(string)"
@@ -107,7 +107,7 @@ final class PrefixedStringTests: XCTestCase {
 	
 	func testRawValue() {
 		let string = Self.randomString
-		let id = PrefixedString<TagIDPrefix>(string: string)
+		let id = string.prefixed(by: TagIDPrefix.self)
 		
 		let result = id.rawValue
 		let expected = "tag_\(string)"

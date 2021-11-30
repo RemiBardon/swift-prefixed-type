@@ -77,7 +77,7 @@ final class PrefixedUUIDTests: XCTestCase {
 	
 	func testEncode() throws {
 		let uuid = UUID()
-		let user = User(id: PrefixedUUID(uuid: uuid))
+		let user = User(id: uuid.prefixed())
 		
 		let data = try JSONEncoder().encode(user)
 		let result = String(data: data, encoding: .utf8)
@@ -88,7 +88,7 @@ final class PrefixedUUIDTests: XCTestCase {
 	
 	func testPrefixedId() {
 		let uuid = UUID()
-		let id = PrefixedUUID<UserIDPrefix>(uuid: uuid)
+		let id = uuid.prefixed(by: UserIDPrefix.self)
 		
 		let result = id.prefixedId
 		let expected = "user_\(uuid.uuidString)"
@@ -98,7 +98,7 @@ final class PrefixedUUIDTests: XCTestCase {
 	
 	func testDescription() {
 		let uuid = UUID()
-		let id = PrefixedUUID<UserIDPrefix>(uuid: uuid)
+		let id = uuid.prefixed(by: UserIDPrefix.self)
 		
 		let result = String(describing: id)
 		let expected = "user_\(uuid.uuidString)"
@@ -108,7 +108,7 @@ final class PrefixedUUIDTests: XCTestCase {
 	
 	func testDebugDescription() {
 		let uuid = UUID()
-		let id = PrefixedUUID<UserIDPrefix>(uuid: uuid)
+		let id = uuid.prefixed(by: UserIDPrefix.self)
 		
 		let result = String(reflecting: id)
 		let expected = "(user_)\(uuid.uuidString)"
@@ -118,7 +118,7 @@ final class PrefixedUUIDTests: XCTestCase {
 	
 	func testRawValue() {
 		let uuid = UUID()
-		let id = PrefixedUUID<UserIDPrefix>(uuid: uuid)
+		let id = uuid.prefixed(by: UserIDPrefix.self)
 		
 		let result = id.rawValue
 		let expected = "user_\(uuid.uuidString)"
