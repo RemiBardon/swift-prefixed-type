@@ -55,7 +55,7 @@ public struct Prefixed<Prefix: PrefixProtocol, Base: Hashable & Codable>: Hashab
 		guard let base = try? JSONDecoder().decode(Base.self, from: data) else {
 			throw DecodingError.dataCorruptedError(
 				in: container,
-				debugDescription: "'\(string)' is not a valid \(Base.self)"
+				debugDescription: "'\(string)' is not a valid `\(Base.self)`"
 			)
 		}
 		
