@@ -71,6 +71,14 @@ final class PrefixedTests: XCTestCase {
 		XCTAssertNoThrow(try JSONDecoder().decode(InsensitiveUser.self, from: data))
 	}
 	
+	func testDecodeWithInvalidTypeUUID() {
+		let data = """
+		{"id": "user_ABCD"}
+		""".data(using: .utf8)!
+		
+		XCTAssertThrowsError(try JSONDecoder().decode(User.self, from: data))
+	}
+	
 	func testEncode() throws {
 		let int = Int.random(in: 0...9999)
 		let user = User(id: Prefixed(base: int))
