@@ -1,0 +1,27 @@
+name: Tests
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+jobs:
+  test:
+    name: Test on ${{ matrix.os }} (swift ${{ matrix.swift }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+        swift:
+          - "5"   # Latest
+          - "5.3" # Lowest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+    - name: Choose Swift version
+      uses: fwal/setup-swift@v1
+      with:
+        swift-version: ${{ matrix.swift }}
+    - name: Run tests in parallel
+      run: swift test --enable-test-discovery --parallel
