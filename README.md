@@ -159,7 +159,7 @@ As you would expect from a package this small, it is not actively developed.
 However, I still have a few things to add:
 
 - [x] Generic `Prefixed` `struct`, to be `UUID`-independent
-- [ ] Swift documentation comments, to make the package more understandable
+- [x] Swift documentation comments, to make the package more understandable
 - [ ] Continuous Integration, to be sure the package runs in all environments
 - [ ] Documentation page
 - [ ] (Installation guides for older Swift Package Manager versions)
