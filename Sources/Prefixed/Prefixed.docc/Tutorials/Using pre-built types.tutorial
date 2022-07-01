@@ -1,0 +1,127 @@
+@Tutorial(time: 5) {
+	@Intro(title: "Creating a prefixed type") {
+		
+	}
+	
+	@Section(title: "Composing with pre-built types") {
+		@ContentAndMedia {
+			This package comes with pre-built types, let's see how to use them.
+		}
+		
+		@Steps {
+			@Step {
+				Import the ``Prefixed`` library.
+				
+				@Code(
+					name: "PrefixedQuickstart.swift",
+					file: 01-using-pre-built-types-01-01.swift,
+					previousFile: 01-using-pre-built-types-01-00.swift
+				)
+			}
+			@Step {
+				Create a type conforming to ``Prefixed/PrefixProtocol``.
+				
+				The value of the ``Prefixed/PrefixProtocol/prefix`` property
+				defines the string string prefix that will be put
+				before the string representation of your data.
+				
+				@Code(
+					name: "PrefixedQuickstart.swift",
+					file: 01-using-pre-built-types-01-02.swift
+				)
+			}
+			@Step {
+				If you want the prefix to be case-insensitive,
+				you can override the default (`true`) value of
+				``Prefixed/PrefixProtocol/isCaseSensitive-8nd0p``.
+				
+				@Code(
+					name: "PrefixedQuickstart.swift",
+					file: 01-using-pre-built-types-01-03.swift
+				)
+			}
+			@Step {
+				Use `UserIDPrefix` in conjunction with ``Prefixed/PrefixedUUID``
+				to create a new type.
+				
+				@Code(
+					name: "PrefixedQuickstart.swift",
+					file: 01-using-pre-built-types-01-04.swift
+				)
+			}
+			@Step {
+				For convenience, you can make `PrefixedUUID<UserIDPrefix>` a `typealias`.
+				
+				> `Identifiable` is not necessary, it's just here as a good practice.
+				
+				@Code(
+					name: "PrefixedQuickstart.swift",
+					file: 01-using-pre-built-types-01-05.swift
+				)
+			}
+			@Step {
+				All ``Prefixed/Prefixed`` types are `Codable`,
+				which means with one more word,
+				you can make your type `Encodable & Decodable`.
+				
+				@Code(
+					name: "PrefixedQuickstart.swift",
+					file: 01-using-pre-built-types-01-06.swift
+				)
+			}
+		}
+	}
+	
+	@Section(title: "Instantiating prefixed values") {
+		@ContentAndMedia {
+			Now that we created a custom prefixed type, let's instantiate it.
+		}
+		
+		@Steps {
+			@Step {
+				To create a `User`, use its [memberwise initializer](https://docs.swift.org/swift-book/LanguageGuide/Initialization.html#ID214)
+				passing it a simple `User.ID()`.
+				
+				``Prefixed/PrefixedUUID`` automatically generates a random `UUID` for you.
+				
+				@Code(
+					name: "PrefixedQuickstart.swift",
+					file: 01-using-pre-built-types-01-07.swift,
+					previousFile: 01-using-pre-built-types-01-06.swift
+				)
+			}
+			@Step {
+				Remember, our `User` `struct` conforms to `Codable`,
+				which means we can encode it to JSON for example.
+				
+				@Code(
+					name: "PrefixedQuickstart.swift",
+					file: 01-using-pre-built-types-01-08.swift
+				)
+			}
+			@Step {
+				We can also decode it from JSON or any other format.
+				
+				> `Codable` implicitly means `Equatable`, so we can compare
+				> our initial value with the new one and see that they're equal.
+				
+				@Code(
+					name: "PrefixedQuickstart.swift",
+					file: 01-using-pre-built-types-01-09.swift
+				)
+			}
+			@Step {
+				Finally, if you need to access the underlying `UUID` of your `User.ID`,
+				you can do so by using ``Prefixed/Prefixed/uuid``.
+				
+				> ``Prefixed/Prefixed/uuid`` (only valid when `Base == UUID`)
+				> is equivalent to the more general ``Prefixed/Prefixed/base``.
+				
+				@Code(
+					name: "PrefixedQuickstart.swift",
+					file: 01-using-pre-built-types-01-10.swift
+				)
+			}
+		}
+	}
+}

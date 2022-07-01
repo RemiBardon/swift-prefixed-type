@@ -1,0 +1,15 @@
+@Tutorials(name: "Prefixed") {
+	@Intro(title: "Meet Prefixed") {
+		Prefixed is a swifty library for prefixing `Codable` types.
+		It gives you type safety so you never mix `UUID`s with others for example.
+	}
+	
+	@Chapter(name: "Using the library") {
+		Learn how to use `Prefixed` and what you can do with it.
+		After learning the basics, you'll see implementations to fit your exact needs.
+		
+		@Image(source: 01-chapter.png, alt: "A rectangle with a truncated user ID. It's prefixed by \"user_\" in bold text, representing what Prefixed can be used for.")
+		
+		@TutorialReference(tutorial: "doc:Using-pre-built-types")
+	}
+}
