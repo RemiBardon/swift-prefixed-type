@@ -15,7 +15,7 @@ jobs:
         os: [ubuntu-latest, macos-latest]
         swift:
           - "5"   # Latest
-          - "5.5" # Lowest
+          - "5.3.3" # Lowest
     steps:
     - name: Choose Swift version
       uses: fwal/setup-swift@v1
@@ -24,4 +24,4 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
     - name: Run tests in parallel
-      run: swift test --enable-test-discovery --parallel
+      run: swift test --parallel
