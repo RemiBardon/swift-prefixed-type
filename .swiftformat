@@ -1,0 +1,7 @@
+--indent tab
+--self insert
+--disable enumNamespaces
+--enable isEmpty,blockComments
+--decimalgrouping 3,5
+--ranges no-space
+--ifdef no-indent
