@@ -14,8 +14,8 @@ jobs:
       matrix:
         os: [ubuntu-latest, macos-latest]
         swift:
-          - "5"   # Latest
-          - "5.3" # Lowest
+          - "5" # Latest
+          - "5.3.3" # Lowest
     steps:
     - name: Choose Swift version
       uses: fwal/setup-swift@2040b795e5c453c3a05fcb8316496afc8a74f192
