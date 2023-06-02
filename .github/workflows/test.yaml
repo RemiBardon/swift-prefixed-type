@@ -18,7 +18,7 @@ jobs:
           - "5.3.3" # Lowest
     steps:
     - name: Choose Swift version
-      uses: fwal/setup-swift@2040b795e5c453c3a05fcb8316496afc8a74f192
+      uses: fwal/setup-swift@v1
       with:
         swift-version: ${{ matrix.swift }}
     - name: Checkout code
