@@ -1,5 +1,7 @@
 # `Prefixed`: A type-safe, `Codable` `struct` for prefixed types
 
+[![Tests](https://github.com/RemiBardon/swift-prefixed-type/actions/workflows/test.yaml/badge.svg)](https://github.com/RemiBardon/swift-prefixed-type/actions/workflows/test.yaml)
+
 ## 🤔 What is `Prefixed` for?
 
 `UUID`s are great, you can use them everywhere… but when you do so,
@@ -160,7 +162,7 @@ However, I still have a few things to add:
 
 - [x] Generic `Prefixed` `struct`, to be `UUID`-independent
 - [x] Swift documentation comments, to make the package more understandable
-- [ ] Continuous Integration, to be sure the package runs in all environments
+- [x] Continuous Integration, to be sure the package runs in all environments
 - [ ] Documentation page
 - [ ] (Installation guides for older Swift Package Manager versions)
 - [ ] (CONTRIBUTING guidelines)
